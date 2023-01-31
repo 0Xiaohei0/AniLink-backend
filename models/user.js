@@ -3,24 +3,14 @@ const mongoose = require("mongoose");
 const User = mongoose.model(
   "User",
   new mongoose.Schema({
-    name: {
+    uId: {
       type: String,
       required: true,
-      minlength: 3,
-      maxlength: 50,
-    },
-    email: {
-      type: String,
-      required: true,
-      minlength: 3,
-      maxlength: 255,
       unique: true,
     },
-    password: {
-      type: String,
+    watchlistData: {
+      type: Array,
       required: true,
-      minlength: 3,
-      maxlength: 1024,
     },
   })
 );

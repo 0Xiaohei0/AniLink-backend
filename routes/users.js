@@ -6,16 +6,30 @@ var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
 
 router.post("/", jsonParser, async (req, res) => {
-  let user = await User.findOne({ email: req.body.email });
-  if (user) return res.status(400).send("User already registered.");
-  user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-  });
-  let saveResult = await user.save();
-  console.log(saveResult);
-  res.send(user);
+  // find user in database
+  let user = await User.findOne({ uId: req.body.uId });
+  // if user doesn't exist, create a new user with local storage watchlist
+  if (!user) {
+    user = new User({
+      uId: req.body.uId,
+      watchlistData: req.body.watchlistData,
+    });
+    let saveResult = await user.save();
+    console.log(saveResult);
+    let m_response = {
+      message:
+        "User not found in database, uploading watchlist from local storage",
+      watchlistData: req.body.watchlistData,
+    };
+    res.send(m_response);
+  } else {
+    // user exists, send the stored watchlist to user
+    let m_response = {
+      message: "User already exists in database, loading watchlist.",
+      watchlistData: user.watchlistData,
+    };
+    res.send(m_response);
+  }
 });
 
 module.exports = router;
