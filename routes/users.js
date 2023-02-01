@@ -36,7 +36,10 @@ router.put("/", jsonParser, async (req, res) => {
   } else {
     // user exists, update watchlist
     user.watchlistData = req.body.watchlistData;
-    user.save();
+    try {
+      await user.save();
+    } catch {}
+    console.log(user.watchlistData.length);
     let m_response = {
       message: "User found, updating watchlist.",
       watchlistData: user.watchlistData,
