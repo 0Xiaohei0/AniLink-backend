@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const app = express();
+require("dotenv").config();
 
 mongoose.set("strictQuery", true);
 
 console.log("Connecting");
 mongoose
-  .connect("mongodb://127.0.0.1:27017/Anilink")
+  .connect(process.env.Anilink_DB)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
