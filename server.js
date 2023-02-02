@@ -13,11 +13,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+app.use(cors());
 
 const port = process.env.PORT;
 app.listen(port, () => console.log(`listening on port ${port}`));
