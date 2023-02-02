@@ -19,7 +19,7 @@ app.use(
   })
 );
 
-const port = 3000;
+const port = process.env.PORT;
 app.listen(port, () => console.log(`listening on port ${port}`));
 
 app.use("/watchlist", users);
